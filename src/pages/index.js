@@ -20,22 +20,19 @@ export default function Home() {
         {next === 1 && 
         <>
         <div className="flex flex-col items-center justify-center px-4 py-2">
-            <h1 className="text-4xl md:text-6xl font-bold">
+            <h1 className="text-4xl text-center md:text-left md:text-6xl font-bold">
               AI Resume, Coverletter Generator
-              <span className="text-4xl md:text-6xl font-bold text-blue-600">
-                .
-              </span>
             </h1>
             <p className="mt-3 text-2xl">
               select one
             </p>
       </div>
-        <div className="flex flex-row justify-evenly items-center w-1/2 h-[30vh]">
+        <div className="flex flex-col md:flex-row justify-evenly items-center w-1/2 h-[30vh]">
           
           {buttonArr.filter((item)=> item.name !== 'Home').map(({id, name})=>{
             return(
               <button 
-              className="bg-blue-500 rounded-lg text-white w-[100px] h-[100px]" key={id}
+              className="bg-blue-500 rounded-lg my-4 md:my-0 text-white w-[100px] h-[100px]" key={id}
               onClick={()=>{
                 if (name === 'Resume') {
                   setNext(2)

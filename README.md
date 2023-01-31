@@ -4,7 +4,7 @@ A simple application that allows users to create resumes, coverletters and other
 
 ## Deployed URL
 
-https://heroic-donut-ca162a.netlify.app/
+https://writerai.onrender.com
 
 ## General Features
 

@@ -53,8 +53,9 @@ export default function Coverletter({setNext}) {
     setResume(data.resume.trim());
   };
   useEffect(() => {
+    console.log(resume)
     // console.log(resume.split("\n"), "resume split")
-  }, [resume])
+  }, [])
   
 
   return (
@@ -76,10 +77,12 @@ export default function Coverletter({setNext}) {
           </p>
     </div>
     <p onClick={()=>{setNext(1)}} >GO BACK</p>
-    <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="grid gap-y-12 md:grid-cols-2 md:gap-x-12 ">
+    {console.log(resume)}
+    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-row justify-center">
+    {resume === '' ?
+      <div className="grid gap-y-12 md:grid-cols-1 md:gap-x-12 ">
         <div className="">
-          <form onSubmit={(e) => handleSubmit(e)}>
+          <form onSubmit={(e) => handleSubmit(e)} className="md:w-[50vw]">
             {coverInputData.map(({id, type, name, placeholder, label, label2})=>{
               return(
                 <div key={id} className="w-[100%] relative ">
@@ -116,7 +119,7 @@ export default function Coverletter({setNext}) {
             })}
 
             <button
-              className={`bg-blue-600 w-full hover:bg-blue-700 text-white font-bold mt-6 py-2 px-4 rounded
+              className={`bg-blue-600 md:w-[50%] hover:bg-blue-700 text-white font-bold mt-6 py-2 px-4 rounded
                 ${
                   isGenerating || form.names === ""
                     ? "cursor-not-allowed opacity-50"
@@ -130,8 +133,12 @@ export default function Coverletter({setNext}) {
           </form>
         </div>
 
-        <div className="" >
-          <div className="flex flex-col">
+        
+      </div>
+      :
+
+      <div className="grid gap-y-12 md:grid-cols-1 md:gap-x-12" >
+          <div className="flex flex-col md:w-[50vw] w-[90vw]">
             <label htmlFor="output" className="sr-only">
               Output
             </label>
@@ -163,10 +170,11 @@ export default function Coverletter({setNext}) {
             <BasicDocument text={resume} />
   
             }
-            
+            <p  className="mt-4 curseor-pointer" onClick={()=>setResume('')}>Start again</p>
           </div>
         </div>
-      </div>
+        }
+        
     </div>
     
     </>

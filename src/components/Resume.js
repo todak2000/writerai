@@ -75,9 +75,11 @@ export default function Resume({setNext}) {
             in Seconds
           </p>
     </div>
-    <p onClick={()=>{setNext(1)}} >GO BACK</p>
-    <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="grid gap-y-12 md:grid-cols-2 md:gap-x-12 ">
+    <p onClick={()=>{setNext(1)}} >GO BACK HOME</p>
+    
+    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-row justify-center">
+    {resume === '' ?
+      <div className="grid gap-y-12 md:grid-cols-1 md:gap-x-12 ">
         <div className="">
           <form onSubmit={(e) => handleSubmit(e)}>
             {resumeInputData.map(({id, type, name, placeholder, label, label2})=>{
@@ -130,8 +132,12 @@ export default function Resume({setNext}) {
             </button>
           </form>
         </div>
+        
+        
+      </div>
+      :
 
-        <div className="" >
+      <div className="grid gap-y-12 md:grid-cols-1 md:gap-x-12 " >
           <div className="flex flex-col">
             <label htmlFor="output" className="sr-only">
               Output
@@ -149,7 +155,7 @@ export default function Resume({setNext}) {
               disabled={resume === ""}
               id="output"
               placeholder="AI Generated Resume Description"
-              className="block w-full rounded-md bg-white border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-gray-900"
+              className="block w-[90vw] md:w-[50vw] rounded-md bg-white border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 placeholder-gray-500 my-2 text-gray-900"
             />
             <button
               onClick={handleCopy}
@@ -161,10 +167,10 @@ export default function Resume({setNext}) {
             </button>
             
             {resume !== "" && <BasicDocument text={resume} />}
-            
+            <p  className="curseor-pointer" onClick={()=>setResume('')}>Start again</p>
           </div>
         </div>
-      </div>
+        }
     </div>
     
     </>
