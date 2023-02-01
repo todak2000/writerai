@@ -1,4 +1,4 @@
-const generateDescription = async ({
+export const generateOthers = async ({
   industry,
   keyWords,
   tone,
@@ -11,7 +11,7 @@ const generateDescription = async ({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           prompt: `${keyWords}.The industry of interest is: ${industry} and not more than ${
@@ -30,18 +30,3 @@ const generateDescription = async ({
   }
 };
 
-export default async function handler(req, res) {
-  const { jobTitle, industry, keyWords, tone, numWords } = req.body;
-
-  const jobDescription = await generateDescription({
-    jobTitle,
-    industry,
-    keyWords,
-    tone,
-    numWords,
-  });
-
-  res.status(200).json({
-    jobDescription,
-  });
-}

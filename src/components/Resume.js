@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { resumeInputData, resumeTextData } from "./constants";
 import BasicDocument from "./pdf";
+import { generateResume } from "@/pages/api/resume";
 
 export default function Resume({setNext}) {
   const [resume, setResume] = useState("");
@@ -33,24 +34,22 @@ export default function Resume({setNext}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsGenerating(true);
-    const res = await fetch("/api/resume", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: form.names,
-        email: form.email,
-        phone: form.phone,
-        skills: form.skills,
-        school: form.school,
-        worked_at: form.worked_at,
-        others: form.others
-      }),
-    });
-    setIsGenerating(false);
-    const data = await res.json();
-    setResume(data.resume.trim());
+    const dataa = {
+      name: form.names,
+      email: form.email,
+      phone: form.phone,
+      skills: form.skills,
+      school: form.school,
+      worked_at: form.worked_at,
+      others: form.others
+    }
+
+    generateResume(dataa).then(res=>{
+      setIsGenerating(false);
+      // console.log(res)
+      setResume(res.trim());
+    })
+
   };
   useEffect(() => {
     // console.log(resume.split("\n"), "resume split")
@@ -147,7 +146,7 @@ export default function Resume({setNext}) {
               rows={
                 resume === ""
                   ? 7
-                  : resume.split("\n").length + 12
+                  : resume.split("\n").length + 3
               }
               name="output"
               value={resume}

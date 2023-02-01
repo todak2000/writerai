@@ -1,5 +1,4 @@
-const generateDescription = async ({
-
+export const generateResume = async ({
   name, 
   email, 
   phone, 
@@ -15,7 +14,7 @@ const generateDescription = async ({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           prompt: `Write a one or two page resume in less than 500 words in a professional for  ${name} having the following details:
@@ -33,15 +32,3 @@ const generateDescription = async ({
     console.error(err);
   }
 };
-
-export default async function handler(req, res) {
-  const { name, email, phone, skills, school, worked_at, others } = req.body;
-
-  const resume = await generateDescription({
-    name, email, phone, skills, school, worked_at, others
-  });
-
-  res.status(200).json({
-    resume,
-  });
-}

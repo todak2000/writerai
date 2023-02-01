@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { coverInputData, coverTextData } from "./constants";
 import BasicDocument from "./pdf";
-
+import { generateCoverLetter } from "@/pages/api/coverletter";
 export default function Coverletter({setNext}) {
   const [resume, setResume] = useState("");
 
@@ -34,23 +34,21 @@ export default function Coverletter({setNext}) {
     e.preventDefault();
     setIsGenerating(true);
     console.log(form, "form")
-    const res = await fetch("/api/coverletter", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: form.names,
-        job_title: form.job_title,
-        job_description: form.job_description,
-        skills: form.skills,
-        company: form.company,
-        others: form.others
-      }),
-    });
-    setIsGenerating(false);
-    const data = await res.json();
-    setResume(data.resume.trim());
+    const dataa = {
+      name: form.names,
+      job_title: form.job_title,
+      job_description: form.job_description,
+      skills: form.skills,
+      company: form.company,
+      others: form.others
+    }
+    generateCoverLetter(dataa).then(res=>{
+      setIsGenerating(false);
+      // console.log(res)
+      setResume(res.trim());
+    })
+ 
+    
   };
   useEffect(() => {
     console.log(resume)
@@ -147,7 +145,7 @@ export default function Coverletter({setNext}) {
               rows={
                 resume === ""
                   ? 7
-                  : resume.split("\n").length + 12
+                  : resume.split("\n").length + 3
               }
               name="output"
               value={resume}

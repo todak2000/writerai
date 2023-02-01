@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { generateOthers } from "@/pages/api/futux";
 
 export default function Futux({setNext}) {
   const [jobDescription, setJobDescription] = useState("");
@@ -20,21 +21,19 @@ export default function Futux({setNext}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsGenerating(true);
-    const res = await fetch("/api/futux", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        industry,
-        keyWords,
-        tone,
-        numWords,
-      }),
-    });
-    setIsGenerating(false);
-    const data = await res.json();
-    setJobDescription(data.jobDescription.trim());
+    const dataa = {
+      industry,
+      keyWords,
+      tone,
+      numWords,
+    }
+
+    generateOthers(dataa).then(res=>{
+      setIsGenerating(false);
+      console.log(res)
+      setJobDescription(res.trim());
+    })
+    
   };
 
   return (
@@ -139,7 +138,7 @@ export default function Futux({setNext}) {
               rows={
                 jobDescription === ""
                   ? 7
-                  : jobDescription.split("\n").length + 12
+                  : jobDescription.split("\n").length + 3
               }
               name="output"
               value={jobDescription}
